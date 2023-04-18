@@ -1,6 +1,8 @@
 using BepInEx;
 using EFT;
 
+using HarmonyLib;
+
 using Config;
 
 using Aki.Reflection.Utils;
@@ -13,6 +15,7 @@ namespace Framesaver
         public Plugin()
         {
             Profiles.Init(Config);
+            Bots.Init(Config);
 
             // Here we experiment with just straight disabling shit to save FPS.
 
@@ -27,13 +30,20 @@ namespace Framesaver
             new AmbientLightOptimizeRenderingPatch().Enable();
             new AmbientLightDisableFrequentUpdatesPatch().Enable();
 
-            //new OptimizeBotStateMachineTransitionsPatch().Enable();
-            new ActivatePatch().Enable();
+            var p = HookObject.AddOrGetComponent<Profiling>();
+            // p.EnableOn(typeof(Component.Bot), "BrainUpdate");
+            // p.EnableOn(typeof(Component.Bot), "BotUpdate");
+            // p.EnableOn(typeof(Component.Bot), "LateUpdate");
+            
+            // This is an extremely quick method- so bot generation on the
+            // server isn't slow at all, from what I can tell.
+            // p.EnableOn(AccessTools.TypeByName("Class223"), "LoadBots");
 
-            new DisableBotBrainUpdatesPatch().Enable();
-            new DisableBotUpdatesPatch().Enable();
-
-            //var p = HookObject.AddOrGetComponent<Profiling>();
+            // These two are the different methods of loading bots from the
+            // server, it's worth profiling them to see.
+            // p.EnableOn(typeof(GClass831), "method_0");
+            // p.EnableOn(typeof(BotsPresets), "method_0");
+            p.EnableOn(typeof(Diz.Jobs.JobScheduler), "LateUpdate");
 
             // Something in these ticks seems to be a hotspot. Let's profile
             // to figure out which they are.
@@ -44,12 +54,6 @@ namespace Framesaver
             // p.EnableOn(typeof(AiTaskManagerClass), "Update");
             // p.EnableOn(typeof(BotsClass), "UpdateByUnity");
             // p.EnableOn(typeof(GClass25<BotLogicDecision>), "Update");
-
-            // These are a part of the TickListener- something in these spikes.
-            // p.EnableOn(typeof(GameWorld), "PlayerTick");
-            // p.EnableOn(typeof(GameWorld), "BallisticsTick");
-            // p.EnableOn(typeof(GameWorld), "AfterPlayerTick");
-            // p.EnableOn(typeof(GameWorld), "OtherElseWorldTick");
         }
     }
 }

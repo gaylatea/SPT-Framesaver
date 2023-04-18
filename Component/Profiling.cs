@@ -80,7 +80,7 @@ namespace Framesaver
             return true;
         }
 
-        public static void Postfix(ref Stopwatch __state, MethodBase __originalMethod)
+        public static void Postfix(ref Stopwatch __state, MethodBase __originalMethod, object[] __args)
         {
             if(!Enabled.Value) { return; }
 
@@ -94,6 +94,10 @@ namespace Framesaver
             cmd.Parameters.AddWithValue("$phase", __originalMethod.Name);
             cmd.Parameters.AddWithValue("$time_ms", __state.Elapsed.TotalMilliseconds);
             cmd.ExecuteNonQuery();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"On frame {Time.frameCount}, {__originalMethod.DeclaringType.Name}::{__originalMethod.Name} took {__state.Elapsed.TotalMilliseconds}; args {__args}");
+            Console.ResetColor();
 
             __state.Reset();
         }
