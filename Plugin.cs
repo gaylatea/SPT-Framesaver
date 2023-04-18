@@ -11,7 +11,7 @@ namespace Framesaver
 
             // This seems to disable a bunch of expensive rigid body physics
             // calculations that don't have much of an effect on gameplay.
-            GClass670.GClass672.Enabled = false;
+            GClass672.GClass674.Enabled = false;
 
             new DontSpawnShellsFiringPatch().Enable();
             new DontSpawnShellsJamPatch().Enable();
