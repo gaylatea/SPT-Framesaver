@@ -1,7 +1,8 @@
-using Aki.Reflection.Patching;
+using System.Reflection;
+
 using EFT;
 
-using System.Reflection;
+using Aki.Reflection.Patching;
 
 namespace Framesaver
 {

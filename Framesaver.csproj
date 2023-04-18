@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <AssemblyName>Gaylatea-Framesaver</AssemblyName>
-    <Copyright>© 2023 Aria Jones</Copyright>
+    <Copyright>© 2023 Aria Adair</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -57,8 +57,6 @@
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
-    <PackageReference Include="SQLite" Version="3.13.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
   </ItemGroup>
 
 </Project>
