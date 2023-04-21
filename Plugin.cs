@@ -19,6 +19,8 @@ namespace Framesaver
 
             new AmbientLightOptimizeRenderingPatch().Enable();
             new AmbientLightDisableFrequentUpdatesPatch().Enable();
+            
+            new WeaponSoundPlayerDisablePatch().Enable();
         }
     }
 }
